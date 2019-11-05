@@ -1,1 +1,5 @@
-# chess-ai
+# Reinforcement Learning Chess Agent
+
+We are a group of students at UC Davis doing our class project for ECS 171 Machine Learning.
+
+We intend to train a chess AI that outperforms humans, and potentially other AIs. We would be using a reinforcement learning approach based off of Google’s alpha zero neural network approach. The goal is to start without any human data, and to let the model repeatedly play against its best version in order to get better through each game. This requires some key steps, like creating the games rules and encoding game states, self-play, the Monte Carlo tree search to determine the best move, and saving the state of the model. This project is significant because we will explore what parameters have the most impact on the results of our model and how training requires computational resources. We will present the optimal hyperparameters for the neural network and comparisons with human players and possibly other chess AIs. 
