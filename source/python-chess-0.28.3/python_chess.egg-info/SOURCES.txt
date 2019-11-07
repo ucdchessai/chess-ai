@@ -1,0 +1,17 @@
+CHANGELOG.rst
+LICENSE.txt
+MANIFEST.in
+README.rst
+setup.py
+chess/__init__.py
+chess/engine.py
+chess/gaviota.py
+chess/pgn.py
+chess/polyglot.py
+chess/svg.py
+chess/syzygy.py
+chess/variant.py
+python_chess.egg-info/PKG-INFO
+python_chess.egg-info/SOURCES.txt
+python_chess.egg-info/dependency_links.txt
+python_chess.egg-info/top_level.txt
