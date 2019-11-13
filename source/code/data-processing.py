@@ -2,7 +2,6 @@
 
 import pandas as pd
 import chess
-#import csv
 
 DATA_PATH = '../data/games.csv'
 
@@ -10,7 +9,16 @@ def main():
     AllData = importData()
     CleanData = clean(AllData)
     boardData = convertToBoardStates(CleanData)
+    boardData = OneHotEncode(boardData)
     print(boardData.to_csv())
+
+def OneHotEncode(Data):
+    y = Data["Winner"]
+    Data.drop(columns="Winner", inplace=True)
+    y = pd.get_dummies(y)
+    Data = pd.concat([Data, y], axis=1)
+    return Data
+
 
 def convertToFeatureVector(boardState):
     pieces = []
@@ -45,8 +53,6 @@ def convertToBoardStates(Data):
             winner = Data['winner'][j]
             boardData.loc[num] = convertToFeatureVector(board) + [WinBin[winner]]
             num += 1
-        if num >= 10000:
-            break
     return boardData
 
 
