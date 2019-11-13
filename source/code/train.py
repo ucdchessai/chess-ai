@@ -11,11 +11,6 @@ from keras import metrics
 
 def main():
     Data = loadData()
-    y = Data["Winner"]
-    Data.drop(columns="Winner", inplace=True)
-    y = pd.get_dummies(y)
-    Data = pd.concat([Data, y], axis=1)
-
 
     train = Data.sample(n=200000)
     test = Data.drop(train.index)
@@ -30,11 +25,11 @@ def main():
     model = getModel()
 
 
-    model.fit(xtrain, ytrain, batch_size=128, epochs=100, verbose=1)
+    model.fit(xtrain, ytrain, batch_size=128, epochs=10, verbose=1)
 
 
 def loadData():
-    data = pd.read_csv('NewChessData.csv', sep=',')
+    data = pd.read_csv('ChessData.csv', sep=',')
     data.drop(columns="Unnamed: 0", inplace=True)
     return data
 
