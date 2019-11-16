@@ -6,7 +6,7 @@ def get_new():
     Returns a new artificial neural network model with randomly initialized
     weights.
     """
-    activation_hidden = keras.layers.LeakyReLU(0.1)
+    activation_hidden = __get_leaky_relu()
 
     specifications = [
         {
@@ -101,7 +101,6 @@ def get_new():
 
     model.compile(
         optimizer=keras.optimizers.SGD(learning_rate=.1),
-        #loss='mean_squared_error'
         loss='categorical_crossentropy'
     )
 
@@ -115,10 +114,68 @@ def load_model(filename):
     """
 
     return keras.models.load_model(filename, custom_objects={'LeakyReLU':
-            keras.layers.LeakyReLU(0.1)})
+            __get_leaky_relu()})
+
+
+def get_dense(hidden_layer_count=5, layer_node_count=16,
+        activation_hidden='relu'):
+    """
+    Returns a densely connected network with the specified parameters.
+    """
+
+    layer_input_count = 64
+    specification = {
+            'type': 'Dense',
+            'units': layer_node_count,
+            'activation': activation_hidden,
+            'use_bias': True,
+            'kernel_initializer': 'glorot_uniform',
+            'bias_initializer': 'zeros',
+            'kernel_regularizer': None,
+            'bias_regularizer': None,
+            'activity_regularizer': None,
+            'kernel_constraint': None,
+            'bias_constraint': None,
+            'input_dim': layer_input_count
+    }
+
+    model = keras.models.Sequential()
+
+    # Add hidden layers.
+    for i in range(hidden_layer_count):
+        specification['input_dim'] = layer_input_count
+        hidden_layer = __instantiate_dense(specification)
+        layer_input_count = layer_node_count
+        model.add(hidden_layer)
+
+    # Add output layer.
+    specification['units'] = 2
+    specification['activation'] = 'softmax'
+    specification['input_dim'] = layer_input_count
+    output_layer = __instantiate_dense(specification)
+    model.add(output_layer)
+
+    model.compile(
+        optimizer=keras.optimizers.SGD(learning_rate=.1),
+        loss='categorical_crossentropy'
+    )
+
+    return model
+
+
+def __get_leaky_relu():
+    """
+    Returns a leaky ReLU loss function with a leaky slope of 0.1.
+    """
+
+    return keras.layers.LeakyReLU(0.1)
 
 
 def __instantiate_layer(specification):
+    """
+    Returns a layer matching the provided ``specification``.
+    """
+
     instantiators = {
         'Dense': __instantiate_dense
     }
@@ -126,6 +183,10 @@ def __instantiate_layer(specification):
 
 
 def __instantiate_dense(specification):
+    """
+    Returns a ``Dense``` layer matching the provided ``specification``.
+    """
+
     s = specification
     return keras.layers.Dense(
         units=s['units'],
