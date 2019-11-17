@@ -1,3 +1,16 @@
+----- DATASET NAME: deepchess-20191117-124052.h5 (OFFICIAL) --------
+batch_size = 128
+dnb_epochs = 200
+deep_chess_epochs = 1000
+
+autoencoderLayers = [64, 60, 40, 20, 10]
+deepChessLayers = [40, 20, 10, 2]
+
+dataSetSize = 1000000
+sampleSize = 500000
+
+----- DATASET NAME: deepchess.h5 --------
+
 # THE DATASET USED INCLUDES MORE THAN 10 MOVES
 # AND IT DOES INVOLVE THE FIRST 5 MOVES OF THE GAME.
 # DEFINATELY NOT IDEAL MODEL.
