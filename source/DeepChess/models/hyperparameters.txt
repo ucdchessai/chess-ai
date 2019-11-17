@@ -1,0 +1,15 @@
+# THE DATASET USED INCLUDES MORE THAN 10 MOVES
+# AND IT DOES INVOLVE THE FIRST 5 MOVES OF THE GAME.
+# DEFINATELY NOT IDEAL MODEL.
+
+#NOTE: This model takes 64 inputs and has 2 outputs
+
+batch_size = 128
+dnb_epochs = 200
+deep_chess_epochs = 1000
+
+autoencoderLayers = [64, 60, 40, 20, 10]
+deepChessLayers = [40, 20, 10, 2]
+
+dataSetSize = 1000
+sampleSize = 500
