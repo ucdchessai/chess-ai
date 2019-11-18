@@ -42,8 +42,9 @@ class PlayerAi:
         if (verbose):
             print('Number of moves: {0}'.format(len(fitnesses)))
             print('Mean fitness: {0}'.format(statistics.mean(fitnesses)))
-            print('Standard deviation: {0}'.format(statistics.stdev(fitnesses)))
-            print('Minimum fitness: {0}'.format(min(fitness)))
+            # For some reason, statistics.stdev() fails.
+            #print('Standard deviation: {0}'.format(statistics.stdev(fitnesses)))
+            print('Minimum fitness: {0}'.format(min(fitnesses)))
             print('Maximum fitness: {0}'.format(max(fitnesses)))
             print('Fitness = {0}'.format(max_fitness))
 
