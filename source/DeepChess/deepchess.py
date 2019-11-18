@@ -1,38 +1,46 @@
+from keras import backend as K
+from keras.utils import Sequence
+from keras.layers import Input, Dense, Activation, Concatenate
+from keras.models import Model, Sequential, clone_model
+import numpy as np
+import time
+import os
 import warnings
 warnings.filterwarnings('ignore', category=FutureWarning)
 
-import numpy as np
-from keras.models import Model, Sequential, clone_model
-from keras.layers import Input, Dense, Activation, Concatenate
-from keras.utils import Sequence
-from keras import backend as K
-
 
 ### GLOBALS AND HYPER PARAMETER SETTINGS ###
-batch_size = 128
-""" Ideally the DBN is trained for 200 epochs """
 dnb_epochs = 200
 deep_chess_epochs = 1000
 
 # Setup the autoencoder, a.k.a the feature extractor
+
+""" Batch size, Layer Sizes and sample size as proposed in paper """
+# batch_size = 512
+# autoencoderLayers = [773, 600, 400, 200, 100]
+# deepChessLayers = [400, 200, 100, 2]
+# dataSetSize = 1000000
+# sampleSize = 1000000
+
+""" Batch size, Layer Sizes and sample size tayloerd to our encoding """
+batch_size = 128
 autoencoderLayers = [64, 60, 40, 20, 10]
 deepChessLayers = [40, 20, 10, 2]
-dbnLayers = len(autoencoderLayers) - 1
+dataSetSize = 10000
+sampleSize = 5000
 
-dataSetSize = 1000
+dbnLayers = len(autoencoderLayers) - 1
 
 numWhiteWon = dataSetSize
 numWhiteLost = dataSetSize
 
-sampleSize = 500
-
 # FILE LOADING
 
-whiteWonFile = "./data/white.npy"
-whiteLostFile = "./data/black.npy"
+whiteWonFile = "./data/whiteBit.npy"
+whiteLostFile = "./data/blackBit.npy"
 mat = np.zeros((numWhiteWon+numWhiteLost, autoencoderLayers[0]))
-mat[:numWhiteWon] = np.load(whiteWonFile)
-mat[numWhiteLost:] = np.load(whiteLostFile)
+mat[:numWhiteWon] = np.load(whiteWonFile)[:dataSetSize]
+mat[numWhiteLost:] = np.load(whiteLostFile)[:dataSetSize]
 data_mat = mat.copy()
 np.random.shuffle(mat)
 
@@ -54,17 +62,17 @@ MORE ON AUTOENCODERS: https://en.wikipedia.org/wiki/Autoencoder
 """
 
 weightMatrix = []
-shape_vec=[]
+shape_vec = []
 
 for i in range(dbnLayers):
     """ INITIALIZE A SEQUENTIAL MODEL """
     dbn_model = Sequential()
     dbn_model.add(Dense(autoencoderLayers[i+1], activation='relu',
-                    input_dim=autoencoderLayers[i] ))
+                        input_dim=autoencoderLayers[i]))
     dbn_model.add(Dense(autoencoderLayers[i], activation='relu'))
     dbn_model.compile(optimizer='adam',
-                  loss='mse',
-                  metrics=['accuracy'])
+                      loss='mse',
+                      metrics=['accuracy'])
 
     dbn_model.summary()
 
@@ -76,7 +84,8 @@ for i in range(dbnLayers):
     # GET THE WEIGHT MATRIX
     weightMatrix.append(dbn_model.layers[0].get_weights())
     # Get the outputs of the hidden layer
-    getHiddenOuptut = K.function([dbn_model.input], [dbn_model.layers[0].output])
+    getHiddenOuptut = K.function(
+        [dbn_model.input], [dbn_model.layers[0].output])
     mat = getHiddenOuptut([mat])[0]
     # print("HIDDEN SHAPE: ", getHiddenOuptut)
     # print(weightMatrix)
@@ -100,7 +109,7 @@ dbn_model = [None]*2
 for i in range(2):
     dbn_model[i] = Sequential()
     dbn_model[i].add(Dense(autoencoderLayers[1], activation='relu',
-                        input_dim=autoencoderLayers[0], trainable=False))
+                           input_dim=autoencoderLayers[0], trainable=False))
     dbn_model[i].add(
         Dense(autoencoderLayers[2], activation='relu', trainable=False))
     dbn_model[i].add(
@@ -108,8 +117,8 @@ for i in range(2):
     dbn_model[i].add(
         Dense(autoencoderLayers[4], activation='relu', trainable=False))
     dbn_model[i].compile(optimizer='adam',
-                loss='mse',
-                metrics=['accuracy'])
+                         loss='mse',
+                         metrics=['accuracy'])
     dbn_model[i].summary()
 
     dbn_model[i].layers[0].set_weights(weightMatrix[0])
@@ -117,7 +126,13 @@ for i in range(2):
     dbn_model[i].layers[2].set_weights(weightMatrix[2])
     dbn_model[i].layers[3].set_weights(weightMatrix[3])
 
+# SAVE THE INTERMEDIATE MODEL IN CASE OF CRASH
+timestr = time.strftime("%Y%m%d-%H%M%S")
+model_filename = "dbn-" + timestr + ".h5"
+dbn_model[0].save(os.path.join("./models/", model_filename))
+
 #----------- BEGIN DEEP CHESS IMPLEMENTATION -------------#
+
 
 class DataGenerator(Sequence):
     'Generates data for Keras'
@@ -140,7 +155,7 @@ class DataGenerator(Sequence):
 
         self.whiteWonStatesY = np.zeros((self.sampleSize,))
         self.whiteLostStatesY = np.ones((self.sampleSize,))
-        
+
         self.on_epoch_end()
 
     def __len__(self):
@@ -171,12 +186,12 @@ class DataGenerator(Sequence):
         # 0 means (W, L), 1 means (L, W)
         allow_swap = np.random.randint(2)
         if allow_swap == 1:
-            X = np.stack([X2,X1], axis=1)
-            Y = np.stack([Y2,Y1], axis=1)
+            X = np.stack([X2, X1], axis=1)
+            Y = np.stack([Y2, Y1], axis=1)
         else:
             X = np.stack([X1, X2], axis=1)
             Y = np.stack([Y1, Y2], axis=1)
-        
+
         feedA, feedB = np.split(X, 2, axis=1)
 
         feedA = np.squeeze(feedA)
@@ -201,7 +216,7 @@ combined = Concatenate()([dbn_model[0].output, dbn_model[1].output])
 deep1 = Dense(deepChessLayers[0], activation="relu")(combined)
 deep2 = Dense(deepChessLayers[1], activation="relu")(deep1)
 deep3 = Dense(deepChessLayers[2], activation="relu")(deep2)
-deep4 = Dense(deepChessLayers[3], activation="relu")(deep3)
+deep4 = Dense(deepChessLayers[3], activation="softmax")(deep3)
 
 # our model will accept the inputs of the two branches and
 # then output two values
@@ -212,7 +227,7 @@ deep_chess_model.compile(
 
 deep_chess_model.summary()
 
-#### https://www.pyimagesearch.com/2018/12/24/how-to-use-keras-fit-and-fit_generator-a-hands-on-tutorial/
+# https://www.pyimagesearch.com/2018/12/24/how-to-use-keras-fit-and-fit_generator-a-hands-on-tutorial/
 
 """ We are using fit_generator() since our data set is massive and 
     may not fit into RAM
@@ -236,10 +251,7 @@ deep_chess_model.summary()
 deep_chess_model.fit_generator(
     generator=dataGen, use_multiprocessing=True, epochs=deep_chess_epochs, workers=6)
 
-### SAVE THE FINAL MODEL
-import os
-import time
-
+# SAVE THE FINAL MODEL
 timestr = time.strftime("%Y%m%d-%H%M%S")
 model_filename = "deepchess-" + timestr + ".h5"
 deep_chess_model.save(os.path.join("./models/", model_filename))
