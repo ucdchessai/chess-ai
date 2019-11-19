@@ -144,6 +144,7 @@ def train_simple_dense(file_name, iterations=None, training_sample_count=300000,
     except:
         print('Creating new model.')
         model = get_simple_dense()
+        model.save(file_name)
 
     # Get training and testing sets.
     [X, Y, X_test, Y_test] = get_data_set(training_sample_count,
