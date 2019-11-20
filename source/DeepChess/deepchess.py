@@ -1,16 +1,17 @@
 import warnings
 warnings.filterwarnings('ignore', category=FutureWarning)
-from keras import backend as K
-from keras.utils import Sequence
-from keras.layers import Input, Dense, Activation, Concatenate
-from keras.models import Model, Sequential, clone_model
-import numpy as np
-import time
+
 import os
+import time
+import numpy as np
+from keras.models import Model, Sequential, clone_model
+from keras.layers import Input, Dense, Activation, Concatenate
+from keras.utils import Sequence
+from keras import backend as K
 
 ### GLOBALS AND HYPER PARAMETER SETTINGS ###
-dnb_epochs = 200
-deep_chess_epochs = 1000
+dnb_epochs = 100
+deep_chess_epochs = 800
 
 # Setup the autoencoder, a.k.a the feature extractor
 
@@ -24,6 +25,7 @@ deep_chess_epochs = 1000
 # whiteLostFile = "./data/blackBit.npy"
 
 """ Batch size, Layer Sizes and sample size tayloerd to our encoding """
+# NOTE: sampleSize >= batch_size. Otherwise it will throw an error.
 batch_size = 256
 autoencoderLayers = [64, 64, 64, 60, 40]
 deepChessLayers = [60, 40, 20, 2]
@@ -134,11 +136,13 @@ dbn_model[0].save(os.path.join("./models/", model_filename))
 
 #----------- BEGIN DEEP CHESS IMPLEMENTATION -------------#
 
+flagger = 0
+
 
 class DataGenerator(Sequence):
     'Generates data for Keras'
 
-    def __init__(self, batch_size=32, sampleSize=100):
+    def __init__(self, batch_size=128, sampleSize=100):
         'Initialization'
         self.batch_size = batch_size
         self.sampleSize = sampleSize
@@ -154,11 +158,6 @@ class DataGenerator(Sequence):
         self.whiteWonStatesX = self.whiteWonStates[:self.sampleSize]
         self.whiteLostStatesX = self.whiteLostStates[:self.sampleSize]
 
-        self.whiteWonStatesY = np.zeros((self.sampleSize,))
-        self.whiteLostStatesY = np.ones((self.sampleSize,))
-
-        self.on_epoch_end()
-
     def __len__(self):
         'Denotes the number of batches per epoch'
         return int(np.floor(self.sampleSize / self.batch_size))
@@ -169,29 +168,50 @@ class DataGenerator(Sequence):
         # We need to prepare batch for each index
         curr_batch_index = self.batch_size*index
 
-        if self.sampleSize - curr_batch_index < 0:
+        if self.sampleSize - curr_batch_index < self.sampleSize:
             X1 = self.whiteWonStatesX[curr_batch_index:]
             X2 = self.whiteLostStatesX[curr_batch_index:]
-            Y1 = self.whiteWonStatesY[curr_batch_index:]
-            Y2 = self.whiteLostStatesY[curr_batch_index:]
         else:
             X1 = self.whiteWonStatesX[curr_batch_index:
                                       curr_batch_index+self.batch_size]
             X2 = self.whiteLostStatesX[curr_batch_index:
                                        curr_batch_index+self.batch_size]
-            Y1 = self.whiteWonStatesY[curr_batch_index:
-                                      curr_batch_index+self.batch_size]
-            Y2 = self.whiteLostStatesY[curr_batch_index:
-                                       curr_batch_index+self.batch_size]
 
-        X1 = np.array(X1)
-        X2 = np.array(X2)
+        X1 = np.array(X1.copy())
+        X2 = np.array(X2.copy())
+
+        Y1 = np.zeros((X1.shape[0],))
+        Y2 = np.ones((X1.shape[0],))
+
+        # print('+++++++++++')
+        # global flagger
+        # if(flagger < 3):
+        #     print(X1)
+        #     print(X2)
+        #     print(np.stack([Y1, Y2], axis=1))
+        # print('---------------')
 
         # 0 means (W, L), 1 means (L, W)
-        allow_swap = np.random.randint(2)
-        if allow_swap == 1:
-            X = [X2, X1]
-            return X, np.stack([Y2, Y1], axis=1)
+        # SWAP INPUTS, WHICH WILL THEN BE FED INTO THE SIAMMESE NETWORK
+        swap_vector = np.random.randint(2, size=len(X1))
+        for i in range(len(swap_vector)):
+            if swap_vector[i] == 1:
+                for j in range(len(X1[i])):
+                    tmp = X1[i][j]
+                    X1[i][j] = X2[i][j]
+                    X2[i][j] = tmp
+                tmp = Y1[i]
+                Y1[i] = Y2[i]
+                Y2[i] = tmp
+
+        # print('---------------')
+        # if(flagger < 3):
+        #     print(swap_vector)
+        #     print(X1)
+        #     print(X2)
+        #     print(np.stack([Y1, Y2], axis=1))
+        #     flagger = flagger + 1
+        # print('+++++++++++')
 
         return [X1, X2], np.stack([Y1, Y2], axis=1)
 
