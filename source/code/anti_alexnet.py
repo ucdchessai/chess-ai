@@ -100,7 +100,7 @@ def get_new():
         model.add(__instantiate_layer(s))
 
     model.compile(
-        optimizer=keras.optimizers.SGD(learning_rate=.1),
+        optimizer=keras.optimizers.Adam(),
         loss='categorical_crossentropy'
     )
 
@@ -122,6 +122,9 @@ def get_dense(hidden_layer_count=5, layer_node_count=16,
     """
     Returns a densely connected network with the specified parameters.
     """
+
+    if (activation_hidden == 'leakyrelu'):
+        activation_hidden = __get_leaky_relu()
 
     layer_input_count = 64
     specification = {
@@ -156,7 +159,7 @@ def get_dense(hidden_layer_count=5, layer_node_count=16,
     model.add(output_layer)
 
     model.compile(
-        optimizer=keras.optimizers.SGD(learning_rate=.1),
+        optimizer=keras.optimizers.Adam(),
         loss='categorical_crossentropy'
     )
 
