@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning)
 from keras import backend as K
 from keras.utils import Sequence
 from keras.layers import Input, Dense, Activation, Concatenate
@@ -5,9 +7,6 @@ from keras.models import Model, Sequential, clone_model
 import numpy as np
 import time
 import os
-import warnings
-warnings.filterwarnings('ignore', category=FutureWarning)
-
 
 ### GLOBALS AND HYPER PARAMETER SETTINGS ###
 dnb_epochs = 200
@@ -21,13 +20,17 @@ deep_chess_epochs = 1000
 # deepChessLayers = [400, 200, 100, 2]
 # dataSetSize = 1000000
 # sampleSize = 1000000
+# whiteWonFile = "./data/whiteBit.npy"
+# whiteLostFile = "./data/blackBit.npy"
 
 """ Batch size, Layer Sizes and sample size tayloerd to our encoding """
-batch_size = 128
-autoencoderLayers = [64, 60, 40, 20, 10]
-deepChessLayers = [40, 20, 10, 2]
-dataSetSize = 10000
-sampleSize = 5000
+batch_size = 256
+autoencoderLayers = [64, 64, 64, 60, 60]
+deepChessLayers = [60, 40, 20, 2]
+dataSetSize = 1000000
+sampleSize = 700000
+whiteWonFile = "./data/white.npy"
+whiteLostFile = "./data/black.npy"
 
 dbnLayers = len(autoencoderLayers) - 1
 
@@ -36,8 +39,6 @@ numWhiteLost = dataSetSize
 
 # FILE LOADING
 
-whiteWonFile = "./data/whiteBit.npy"
-whiteLostFile = "./data/blackBit.npy"
 mat = np.zeros((numWhiteWon+numWhiteLost, autoencoderLayers[0]))
 mat[:numWhiteWon] = np.load(whiteWonFile)[:dataSetSize]
 mat[numWhiteLost:] = np.load(whiteLostFile)[:dataSetSize]
@@ -156,8 +157,6 @@ class DataGenerator(Sequence):
         self.whiteWonStatesY = np.zeros((self.sampleSize,))
         self.whiteLostStatesY = np.ones((self.sampleSize,))
 
-        self.on_epoch_end()
-
     def __len__(self):
         'Denotes the number of batches per epoch'
         return int(np.floor(self.sampleSize / self.batch_size))
@@ -186,23 +185,22 @@ class DataGenerator(Sequence):
         # 0 means (W, L), 1 means (L, W)
         allow_swap = np.random.randint(2)
         if allow_swap == 1:
-            X = np.stack([X2, X1], axis=1)
-            Y = np.stack([Y2, Y1], axis=1)
+            X = [X2, X1]
+            Y = [Y2, Y1]
         else:
-            X = np.stack([X1, X2], axis=1)
-            Y = np.stack([Y1, Y2], axis=1)
+            X = [X1, X2]
+            Y = [Y1, Y2]
 
-        feedA, feedB = np.split(X, 2, axis=1)
-
-        feedA = np.squeeze(feedA)
-        feedB = np.squeeze(feedB)
-
-        return [feedA, feedB], Y
+        return X, Y
 
     def on_epoch_end(self):
         'Updates indexes after each epoch'
+        self.whiteWonStates = data_mat[:numWhiteWon]
+        self.whiteLostStates = data_mat[numWhiteWon:]
         np.random.shuffle(self.whiteWonStates)
         np.random.shuffle(self.whiteLostStates)
+        self.whiteWonStatesX = self.whiteWonStates[:self.sampleSize]
+        self.whiteLostStatesX = self.whiteLostStates[:self.sampleSize]
 
 
 # GENERATOR - to generate data on the fly
@@ -246,10 +244,13 @@ deep_chess_model.summary()
 
     And main tutorial:
     https://stanford.edu/~shervine/blog/keras-how-to-generate-data-on-the-fly
+
+    Tutorial on Siamese Network and Keras:
+    https://towardsdatascience.com/one-shot-learning-with-siamese-networks-using-keras-17f34e75bb3d
 """
 
 deep_chess_model.fit_generator(
-    generator=dataGen, use_multiprocessing=True, epochs=deep_chess_epochs, workers=6)
+    generator=dataGen, use_multiprocessing=True, epochs=deep_chess_epochs)
 
 # SAVE THE FINAL MODEL
 timestr = time.strftime("%Y%m%d-%H%M%S")
