@@ -11,7 +11,7 @@ from keras import backend as K
 
 ### GLOBALS AND HYPER PARAMETER SETTINGS ###
 dnb_epochs = 100
-deep_chess_epochs = 800
+deep_chess_epochs = 300
 
 # Setup the autoencoder, a.k.a the feature extractor
 
@@ -168,7 +168,7 @@ class DataGenerator(Sequence):
         # We need to prepare batch for each index
         curr_batch_index = self.batch_size*index
 
-        if self.sampleSize - curr_batch_index < self.sampleSize:
+        if self.sampleSize - curr_batch_index < self.batch_size:
             X1 = self.whiteWonStatesX[curr_batch_index:]
             X2 = self.whiteLostStatesX[curr_batch_index:]
         else:
