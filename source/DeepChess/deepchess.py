@@ -25,10 +25,10 @@ deep_chess_epochs = 1000
 
 """ Batch size, Layer Sizes and sample size tayloerd to our encoding """
 batch_size = 256
-autoencoderLayers = [64, 64, 64, 60, 60]
+autoencoderLayers = [64, 64, 64, 60, 40]
 deepChessLayers = [60, 40, 20, 2]
 dataSetSize = 1000000
-sampleSize = 700000
+sampleSize = 600000
 whiteWonFile = "./data/white.npy"
 whiteLostFile = "./data/black.npy"
 
@@ -157,6 +157,8 @@ class DataGenerator(Sequence):
         self.whiteWonStatesY = np.zeros((self.sampleSize,))
         self.whiteLostStatesY = np.ones((self.sampleSize,))
 
+        self.on_epoch_end()
+
     def __len__(self):
         'Denotes the number of batches per epoch'
         return int(np.floor(self.sampleSize / self.batch_size))
@@ -165,7 +167,7 @@ class DataGenerator(Sequence):
         'Generate one batch of data'
         # Generate indexes of the batch
         # We need to prepare batch for each index
-        curr_batch_index = batch_size*index
+        curr_batch_index = self.batch_size*index
 
         if self.sampleSize - curr_batch_index < 0:
             X1 = self.whiteWonStatesX[curr_batch_index:]
@@ -182,25 +184,21 @@ class DataGenerator(Sequence):
             Y2 = self.whiteLostStatesY[curr_batch_index:
                                        curr_batch_index+self.batch_size]
 
+        X1 = np.array(X1)
+        X2 = np.array(X2)
+
         # 0 means (W, L), 1 means (L, W)
         allow_swap = np.random.randint(2)
         if allow_swap == 1:
             X = [X2, X1]
-            Y = [Y2, Y1]
-        else:
-            X = [X1, X2]
-            Y = [Y1, Y2]
+            return X, np.stack([Y2, Y1], axis=1)
 
-        return X, Y
+        return [X1, X2], np.stack([Y1, Y2], axis=1)
 
     def on_epoch_end(self):
         'Updates indexes after each epoch'
-        self.whiteWonStates = data_mat[:numWhiteWon]
-        self.whiteLostStates = data_mat[numWhiteWon:]
         np.random.shuffle(self.whiteWonStates)
         np.random.shuffle(self.whiteLostStates)
-        self.whiteWonStatesX = self.whiteWonStates[:self.sampleSize]
-        self.whiteLostStatesX = self.whiteLostStates[:self.sampleSize]
 
 
 # GENERATOR - to generate data on the fly
