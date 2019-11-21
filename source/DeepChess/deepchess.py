@@ -10,8 +10,8 @@ from keras.utils import Sequence
 from keras import backend as K
 
 ### GLOBALS AND HYPER PARAMETER SETTINGS ###
-dnb_epochs = 100
-deep_chess_epochs = 300
+dnb_epochs = 150
+deep_chess_epochs = 550
 
 # Setup the autoencoder, a.k.a the feature extractor
 
@@ -27,12 +27,12 @@ deep_chess_epochs = 300
 """ Batch size, Layer Sizes and sample size tayloerd to our encoding """
 # NOTE: sampleSize >= batch_size. Otherwise it will throw an error.
 batch_size = 256
-autoencoderLayers = [64, 64, 64, 60, 40]
+autoencoderLayers = [69, 69, 69, 60, 40]
 deepChessLayers = [60, 40, 20, 2]
 dataSetSize = 1000000
 sampleSize = 600000
-whiteWonFile = "./data/white.npy"
-whiteLostFile = "./data/black.npy"
+whiteWonFile = "./data/white69.npy"
+whiteLostFile = "./data/black69.npy"
 
 dbnLayers = len(autoencoderLayers) - 1
 
