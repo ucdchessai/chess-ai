@@ -13,5 +13,9 @@ HOW TO TRIAN:
     https://drive.google.com/drive/u/1/folders/1mmu_TuPDrpijReAMeUr7dY4bgz4p-n8V
     
 1.5) Make sure to update what dataset you want to use in `dbn.py` and `deepchess.py`
-2) Run `python3 dbn.py`
-3) Run `python3 deepchess.py`
+2) Run `python3 dbn.py`. Let it finish. This automatically stores a file called
+    `dbn-model.h5` in `models` directory.
+3) Run `python3 deepchess.py`. This will load the `dbn-model.h5` from the 
+    `models` directory and begins training the DeepChess layers. The final 
+    trained model will be stored in the `models` directory with name:
+    `deepchess-(timestamp).h5`.
