@@ -12,16 +12,18 @@ import os
 
 ### GLOBALS AND HYPER PARAMETER SETTINGS ###
 dnb_epochs = 200
-deep_chess_epochs = 10
+deep_chess_epochs = 1000
 
 # Setup the autoencoder, a.k.a the feature extractor
 
 """ Batch size, Layer Sizes and sample size as proposed in paper """
-batch_size = 128
+batch_size = 512
 autoencoderLayers = [773, 600, 400, 200, 100]
 deepChessLayers = [400, 200, 100, 2]
-dataSetSize = 500
-sampleSize = 250
+dataSetSize = 1000000
+sampleSize = 800000
+
+# ------------> Change these depending on the dataset <------------
 whiteWonFile = "./data/whiteBit.npy"
 whiteLostFile = "./data/blackBit.npy"
 

@@ -11,5 +11,7 @@ HOW TO TRIAN:
         `black_dp.npy` and `black_dp.npy`
     Datasets can be found in Google Drive:
     https://drive.google.com/drive/u/1/folders/1mmu_TuPDrpijReAMeUr7dY4bgz4p-n8V
+    
+1.5) Make sure to update what dataset you want to use in `dbn.py` and `deepchess.py`
 2) Run `python3 dbn.py`
 3) Run `python3 deepchess.py`
