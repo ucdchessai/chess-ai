@@ -1,0 +1,28 @@
+-------------------------
+NN Depth: 1, Crafty Depth: 1
+-------------------------
+DeepChess: 1-0 :Crafty, Total Moves: 106, Time: 11 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 208, Time: 20 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 198, Time: 30 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 194, Time: 21 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 174, Time: 18 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 174, Time: 21 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 160, Time: 17 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 124, Time: 32 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 204, Time: 23 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 238, Time: 30 seconds.
+
+-------------------------
+NN Depth: 1, Stockfish Depth: 1
+-------------------------
+DeepChess: 1-0 :Stockfish, Total Moves: 418, Time: 46 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 356, Time: 25 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 394, Time: 42 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 310, Time: 24 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 294, Time: 34 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 84, Time: 9 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 148, Time: 10 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 164, Time: 20 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 302, Time: 26 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 318, Time: 34 seconds.
+
