@@ -1,0 +1,54 @@
+-------------------------
+NN Depth: 2, Crafty Depth: 2
+-------------------------
+DeepChess: 0-1 :Crafty, Total Moves: 66, Time: 24 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 88, Time: 43 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 106, Time: 26 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 32, Time: 20 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 134, Time: 36 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 68, Time: 37 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 44, Time: 33 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 30, Time: 13 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 172, Time: 56 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 8, Time: 4 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 42, Time: 10 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 56, Time: 21 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 28, Time: 13 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 18, Time: 6 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 76, Time: 17 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 44, Time: 29 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 76, Time: 17 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 70, Time: 25 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 56, Time: 35 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 68, Time: 32 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 148, Time: 43 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 152, Time: 50 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 116, Time: 30 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 40, Time: 17 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 88, Time: 33 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 180, Time: 49 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 168, Time: 49 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 122, Time: 27 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 32, Time: 17 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 112, Time: 27 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 102, Time: 31 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 68, Time: 25 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 56, Time: 36 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 56, Time: 36 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 106, Time: 23 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 52, Time: 28 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 38, Time: 16 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 32, Time: 17 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 28, Time: 5 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 178, Time: 41 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 40, Time: 22 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 116, Time: 26 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 60, Time: 21 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 102, Time: 31 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 80, Time: 23 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 164, Time: 43 seconds.
+DeepChess: 1/2-1/2 :Crafty, Total Moves: 88, Time: 32 seconds.
+DeepChess: 0-1 :Crafty, Total Moves: 76, Time: 22 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 28, Time: 21 seconds.
+DeepChess: 1-0 :Crafty, Total Moves: 30, Time: 13 seconds.
+
