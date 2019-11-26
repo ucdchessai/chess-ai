@@ -1,10 +1,12 @@
 import anti_alexnet
-import chess
-import math
-import numpy as np
-import pandas as pd
+from   chess import Board
+from   math import isnan
+from   numpy import ones
+from   pandas import read_csv
 from   PlayerAi import PlayerAi
-import random
+from   random import choice
+from   random import seed
+from   random import shuffle
 
 def main():
     model_file_name = 'simple_dense.h5'
@@ -12,11 +14,16 @@ def main():
     model = anti_alexnet.load_model(model_file_name)
 
     # Look at what the model's first move is.
-    board = chess.Board()
+    board = Board()
     ai = PlayerAi(model)
-    move = ai.get_move(board, verbose=True)
-    board.push(move)
     print(board)
+    while (not(board.is_game_over())):
+        move = ai.get_move(board, decisiveness=16, verbose=True)
+        board.push(move)
+        print(board)
+        moves = [move for move in board.legal_moves]
+        board.push(choice(moves))
+        print(board)
 
 
 def get_data_set(training_samples, testing_samples=0):
@@ -35,7 +42,7 @@ def get_data_set(training_samples, testing_samples=0):
     data = data.sample(n=n).values
 
     indices = [x for x in range(n)]
-    random.shuffle(indices)
+    shuffle(indices)
     indices_training = indices[:training_samples]
     indices_testing = indices[training_samples:]
 
@@ -55,7 +62,7 @@ def get_simple_dense():
 
 
 def loadData():
-    data = pd.read_csv('ChessData.csv', sep=',')
+    data = read_csv('ChessData.csv', sep=',')
     data.drop(columns="Unnamed: 0", inplace=True)
     return data
 
@@ -76,8 +83,8 @@ def param_sweep():
     # Initialize some variables.
     hidden_layer_counts = list(range(2, 9, 2))
     layer_node_counts = [2**x for x in range(2, 7)]
-    errors = np.ones((epochs + 1, len(hidden_layer_counts), len(layer_node_counts)))
-    losses = np.ones((epochs + 1, len(hidden_layer_counts), len(layer_node_counts)))
+    errors = ones((epochs + 1, len(hidden_layer_counts), len(layer_node_counts)))
+    losses = ones((epochs + 1, len(hidden_layer_counts), len(layer_node_counts)))
 
     [X, Y, X_test, Y_test] = get_data_set(100000, 10000)
 

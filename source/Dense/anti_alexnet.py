@@ -1,4 +1,3 @@
-import tensorflow as tf
 from   tensorflow import keras
 
 def get_new():
