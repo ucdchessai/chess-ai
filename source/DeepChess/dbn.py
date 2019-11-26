@@ -23,8 +23,8 @@ dataSetSize = 1000000
 sampleSize = 800000
 
 # ------------> Change these depending on the dataset <------------
-whiteWonFile = "./data/whiteBit.npy"
-whiteLostFile = "./data/blackBit.npy"
+whiteWonFile = "../data/whiteWin.npy"
+whiteLostFile = "../data/blackWin.npy"
 
 """ Batch size, Layer Sizes and sample size tayloerd to our encoding """
 # NOTE: sampleSize >= batch_size. Otherwise it will throw an error.

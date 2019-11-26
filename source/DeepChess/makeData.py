@@ -161,7 +161,7 @@ def iterateOverData():
 print("Starting")
 white, black = iterateOverData()
 
-np.save("data/whiteWin.npy", white)
-np.save("data/blackWin.npy", black)
+np.save("../data/whiteWin.npy", white)
+np.save("../data/blackWin.npy", black)
 
 print("Done")

@@ -1,4 +1,4 @@
-HOW TO TRIAN:
+HOW TO TRAIN:
 -------------
 
 0) Make sure you have `data` and `models` in your directory.
