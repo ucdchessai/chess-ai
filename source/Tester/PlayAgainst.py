@@ -34,7 +34,7 @@ engines_names = ["Stockfish", "Crafty", "Human"]
 nn = 0
 
 nn_names = ["DeepChess", "SimpleDense"]
-nn_fn_array = ["../models/deepchess-69.h5", "simple_dense.h5"]
+nn_fn_array = ["../DeepChess/models/deepchess-69.h5", "../Dense/simple_dense.h5"]
 decision_string = []
 svg_array=[]
 
@@ -50,8 +50,8 @@ print("Done Loading")
 
 def chooseEngine(num):
     if num == 1:
-        return chess.engine.SimpleEngine.popen_xboard("./crafty")
-    return chess.engine.SimpleEngine.popen_uci("./stockfish_10_x64")
+        return chess.engine.SimpleEngine.popen_xboard("./engines/crafty")
+    return chess.engine.SimpleEngine.popen_uci("./engines/stockfish_10_x64")
 
 def countMoves(moves):
     length = 0
