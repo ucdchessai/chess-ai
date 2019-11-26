@@ -123,7 +123,8 @@ def param_sweep():
 
 
 def train_simple_dense(file_name, iterations=None, training_sample_count=300000,
-        test_sample_count=40000, batch_size=100, epoch_steps=1, verbose=1):
+        test_sample_count=40000, batch_size=100, epoch_steps=1, save_best=False,
+        by_performance=False, verbose=1):
     """
     Trains a simple densely-connected neural network and saves the model.
 
@@ -142,6 +143,8 @@ def train_simple_dense(file_name, iterations=None, training_sample_count=300000,
     testing.
     ``batch_size`` - The batch size for stochastic gradient descent.
     ``epoch_steps`` - The number of epochs per iteration.
+    ``save_best`` - Only re-save if the test loss is better.
+    ``by_performance`` - Name the file based on performance.
     """
 
     # Load or create simple dense ANN.
@@ -164,6 +167,7 @@ def train_simple_dense(file_name, iterations=None, training_sample_count=300000,
     else:
         inc = 1
     i = 0
+    best_loss = model.evaluate(X_test, Y_test, verbose=0)
     while (i < iterations):
         model.fit(X, Y, batch_size=batch_size, epochs=epoch_steps,
                 verbose=verbose)
@@ -171,7 +175,15 @@ def train_simple_dense(file_name, iterations=None, training_sample_count=300000,
         if ((verbose > 0) & (test_sample_count > 0)):
             print('Testing error: {0}\n'.format(error))
         if (not(math.isnan(error))):
-            model.save(file_name)
+            unique_name = file_name
+            if (by_performance):
+                name_split = file_name.split(sep='.')
+                performance = math.e**(-error)
+                name_split[0] += '_r' + str(int(round(100. * performance)))
+                unique_name = '.'.join(name_split)
+            if (not(save_best) or (error < best_loss)):
+                best_loss = min(best_loss, error)
+                model.save(unique_name)
         i += inc
 
 
