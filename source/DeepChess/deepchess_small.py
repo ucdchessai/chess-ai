@@ -18,8 +18,8 @@ deep_chess_epochs = 1000
 
 """ Batch size, Layer Sizes and sample size as proposed in paper """
 batch_size = 512
-autoencoderLayers = [773, 600, 400, 200, 100]
-deepChessLayers = [400, 200, 100, 2]
+autoencoderLayers = [773, 100, 100, 100]
+deepChessLayers = [100, 100, 2]
 dataSetSize = 1000000
 sampleSize = 800000
 
@@ -141,7 +141,7 @@ dataGen = DataGenerator(batch_size, sampleSize)
 
 # https://www.pyimagesearch.com/2019/02/04/keras-multiple-inputs-and-mixed-data/
 
-dbn = load_model("./models/dbn-model.h5")
+dbn = load_model("./models/dbn_small-model.h5")
 
 leftNetwork = Input(shape=(autoencoderLayers[0],))
 rightNework = Input(shape=(autoencoderLayers[0],))
@@ -151,13 +151,12 @@ combined = Concatenate()([dbn(leftNetwork), dbn(rightNework)])
 
 deep1 = Dense(deepChessLayers[0], activation="relu")(combined)
 deep2 = Dense(deepChessLayers[1], activation="relu")(deep1)
-deep3 = Dense(deepChessLayers[2], activation="relu")(deep2)
-deep4 = Dense(deepChessLayers[3], activation="softmax")(deep3)
+deep3 = Dense(deepChessLayers[2], activation="softmax")(deep2)
 
 # our model will accept the inputs of the two branches and
 # then output two values
 deep_chess_model = Model(
-    inputs=[leftNetwork, rightNework], outputs=deep4)
+    inputs=[leftNetwork, rightNework], outputs=deep3)
 deep_chess_model.compile(
     optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
@@ -192,5 +191,5 @@ deep_chess_model.fit_generator(
 
 # SAVE THE FINAL MODEL
 timestr = time.strftime("%Y%m%d-%H%M%S")
-model_filename = "deepchess-" + timestr + ".h5"
+model_filename = "deepchess_small-" + timestr + ".h5"
 deep_chess_model.save(os.path.join("./models/", model_filename))
