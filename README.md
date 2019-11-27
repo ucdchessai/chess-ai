@@ -6,9 +6,9 @@ This repository contains the design and implementation of two chess players usin
 
 ## Dependencies
 
-Operating Systems: Verified on Ubuntu 18.04
-Programming Languages: Python (version >= 3.7)
-Libraries: Keras, TensorFlow, pandas, numpy, python-chess, Jupyter Notebook
+* Operating Systems: Verified on Ubuntu 18.04
+* Programming Languages: Python (version >= 3.7)
+* Libraries: Keras, TensorFlow, pandas, numpy, python-chess, Jupyter Notebook
 
 ## How to Use
 
