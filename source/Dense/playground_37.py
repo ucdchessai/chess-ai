@@ -1,6 +1,6 @@
 import anti_alexnet
 from   chess import Board
-from   math import isnan
+import math
 from   numpy import ones
 from   pandas import read_csv
 from   PlayerAi import PlayerAi
@@ -59,6 +59,45 @@ def get_simple_dense():
     hidden layer.
     """
     return anti_alexnet.get_dense(hidden_layer_count=8, layer_node_count=32)
+
+
+def k_fold(n, data_count = 340000, batch_size=32, epochs=10):
+    all_X, all_Y, _, _ = get_data_set(data_count)
+
+    scramble = list(range(data_count))
+    shuffle(scramble)
+
+    splits = [int(float(data_count) * i/n) for i in range(n + 1)]
+
+    train_Xs = []
+    train_Ys = []
+    test_Xs = []
+    test_Ys = []
+    for i in range(len(splits) - 1):
+        train_indices = scramble[:splits[i]] + scramble[splits[i+1]:]
+        test_indices = scramble[splits[i]:splits[i+1]]
+
+        train_Xs.append(all_X[train_indices,:])
+        train_Ys.append(all_Y[train_indices,:])
+        test_Xs.append(all_X[test_indices,:])
+        test_Ys.append(all_Y[test_indices,:])
+
+    gen_acc = [0] * (epochs + 1)
+    for i in range(n):
+        print('*** Fold {}/{} ***'.format(i + 1, n))
+        model = get_simple_dense()
+
+        error = model.evaluate(test_Xs[i], test_Ys[i], verbose=0)
+        gen_acc[0] += math.e**(-error)
+        for epoch in range(epochs):
+            print('\tEpoch {}/{}'.format(epoch + 1, epochs))
+            model.fit(train_Xs[i], train_Ys[i], batch_size=batch_size, epochs=1, verbose=0)
+            error = model.evaluate(test_Xs[i], test_Ys[i], verbose=0)
+            gen_acc[epoch + 1] += math.e**(-error)
+
+    gen_acc = [x / n for x in gen_acc] # Divide to get average.
+
+    return gen_acc
 
 
 def loadData():
