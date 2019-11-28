@@ -1,0 +1,54 @@
+-------------------------
+NN Depth: 1, Stockfish Depth: 1
+-------------------------
+DeepChess: 1-0 :Stockfish, Total Moves: 46, Time: 4 seconds.
+DeepChess: 1/2-1/2 :Stockfish, Total Moves: 434, Time: 63 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 124, Time: 18 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 332, Time: 49 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 252, Time: 33 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 230, Time: 35 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 46, Time: 4 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 94, Time: 5 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 112, Time: 11 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 116, Time: 12 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 222, Time: 40 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 298, Time: 79 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 298, Time: 70 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 252, Time: 24 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 190, Time: 38 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 246, Time: 17 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 188, Time: 29 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 318, Time: 31 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 224, Time: 47 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 252, Time: 31 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 514, Time: 93 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 246, Time: 17 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 254, Time: 20 seconds.
+DeepChess: 1/2-1/2 :Stockfish, Total Moves: 492, Time: 22 seconds.
+DeepChess: 1/2-1/2 :Stockfish, Total Moves: 202, Time: 15 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 236, Time: 22 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 342, Time: 29 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 168, Time: 22 seconds.
+DeepChess: 1/2-1/2 :Stockfish, Total Moves: 590, Time: 31 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 208, Time: 18 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 418, Time: 42 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 288, Time: 24 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 246, Time: 22 seconds.
+DeepChess: 1/2-1/2 :Stockfish, Total Moves: 440, Time: 40 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 306, Time: 40 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 202, Time: 17 seconds.
+DeepChess: 1/2-1/2 :Stockfish, Total Moves: 310, Time: 32 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 408, Time: 36 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 308, Time: 17 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 218, Time: 27 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 274, Time: 45 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 248, Time: 24 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 304, Time: 20 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 180, Time: 24 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 260, Time: 25 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 374, Time: 40 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 250, Time: 22 seconds.
+DeepChess: 0-1 :Stockfish, Total Moves: 344, Time: 56 seconds.
+DeepChess: 1-0 :Stockfish, Total Moves: 130, Time: 19 seconds.
+DeepChess: 1/2-1/2 :Stockfish, Total Moves: 226, Time: 35 seconds.
+
